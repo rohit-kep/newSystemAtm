@@ -148,13 +148,14 @@ function notify(title,msg){
         Notification.requestPermission().then(permission=>{
             if(permission === 'granted'){
                 notificaiton = new Notification(title,{body:msg});
+                notificaiton.onclick = ()=>{
+                window.location.href = './notificationConcent.html';
+    }
             }
         }).catch(err=>console.log(err));
     }
-    notificaiton.onclick = ()=>{
-        window.location.href = './notificationConcent.html';
-
-    }
+       notificaiton.onclick = ()=>{
+                window.location.href = './notificationConcent.html';
     
 }
 

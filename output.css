@@ -661,6 +661,14 @@ video {
   width: 150px;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
+.w-auto {
+  width: auto;
+}
+
 .flex-col {
   flex-direction: column;
 }

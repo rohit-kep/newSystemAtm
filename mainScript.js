@@ -69,7 +69,7 @@ signUp.addEventListener('click',e=>{
         return false;
     }
     
-    localStorage.setItem(data.userName,data.password);
+    localStorage.setItem(data.userName,(data.password+' y'));
 
   //then clear the form and tell the user about it
   userName.value = '';
@@ -85,33 +85,52 @@ signUp.addEventListener('click',e=>{
 // code for login into the system
 
 const logIn = document.getElementById('logIn');
+let userAccessTries = 0;
 
 logIn.addEventListener('click',e=>{
 e.preventDefault();
-
+    
     //try to find the entered value into the local storage
     
+    
+
+
     if(localStorage.getItem(userName.value) == null){
-        creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-[150px] h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`user not found`);
-        return false;
+        creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-[150px] h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`user doesn't exist.`);
+        return;
     }
 
-    if(localStorage.getItem(userName.value) !== String(passwd.value)){
+    let flag = localStorage.getItem(userName.value).split(' ')[1];
+    if(flag === 'n'){
+        creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-auto h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`u have exceeded the maximum attempt for the day.`);
+        return;
+    }
+
+
+
+    if(localStorage.getItem(userName.value).split(' ').shift() !== String(passwd.value)){
         creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-[150px] h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`password is incorrect`);
-        return false;
+        userAccessTries += 1;
+        
+        if(userAccessTries ===3){
+            creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-[150px] h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`maximum tries exceeed`);
+        
+        //marking for unable to use this user    
+
+          let markedPasswd =   localStorage.getItem(userName.value).substring(0,(localStorage.getItem(userName.value).length-1));
+          markedPasswd =markedPasswd+"n";
+          
+           localStorage.setItem(userName.value,markedPasswd);
+             setTimeout(() => {
+                window.location.reload();    
+            }, 1000);
+        }
+    
+        return;
     }
 
-    //if not send the warning about the attempts
-    console.log("authentication sucessful");
-    notify('card authentication','user authentication details entered sucessfully, click to close the sessoin, close to continue');
-    // if everything is alright then send the notification to user, 
+    notify('card authentication','user authentication details entered sucessfully, click to move furthur.');
 
-    // if resoponse is wrong reset the form
-
-
-
-    //if response is right reset the form and let him enter the system.
-return false;
 })
 
 

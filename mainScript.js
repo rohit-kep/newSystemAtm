@@ -92,9 +92,6 @@ e.preventDefault();
     
     //try to find the entered value into the local storage
     
-    
-
-
     if(localStorage.getItem(userName.value) == null){
         creatDialog(document.body,'span',{class:' bg-red-200 px-[20px] absolute block w-[150px] h-[75px] border-r-[10px] border-blue-200 top-[200px] left-0'},`user doesn't exist.`);
         return;
@@ -158,6 +155,7 @@ function notify(title,msg){
                 window.location.href = './notificationConcent.html';
     
 }
+}
 
 
 
@@ -185,12 +183,3 @@ function creatDialog(par,type,attributes,text){
     }, 2000);
 }
 
-
-
-
-
-//remaining task
-
-// code for login
-//code for notification validation
-//code for setting up the account page.
